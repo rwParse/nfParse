@@ -20,7 +20,8 @@ axios.post(`${config.novafronteira.baseUrl}`, params, configHeaders)
   .then((result) => {
     const jsonText = JSON.stringify(result.data);
     const responseObject = JSON.parse(jsonText);
-    res.json(responseObject);
+    const patrimonio = parseInt(responseObject.resposta['tab-p0'].linha.saldo_bruto_da_carteira).toFixed(2)
+    res.json({patrimonio});
   })
   .catch((err) => {
     res.status(err.response.status).json({error: err.response.data})
