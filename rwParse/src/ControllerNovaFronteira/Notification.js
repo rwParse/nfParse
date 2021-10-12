@@ -16,7 +16,6 @@ const configHeaders = {
     'Content-Type': 'application/x-www-form-urlencoded'
   }
 }
- console.log(params.values())
 axios.post(`${config.novafronteira.baseUrl}`, params, configHeaders)
   .then((result) => {
     const jsonText = JSON.stringify(result.data);
