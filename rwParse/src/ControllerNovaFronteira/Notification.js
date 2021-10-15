@@ -24,7 +24,7 @@ axios.post(`${config.novafronteira.baseUrl}`, params, {timeout: 1000 * 4}, confi
     res.json({patrimonio});
   })
   .catch((err) => {
-    res.status(err.response.status).json({error: err.response.data})
+    res.status(404).json({error: err})
   })
 
 }
