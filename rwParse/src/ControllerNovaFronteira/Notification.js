@@ -16,7 +16,7 @@ const configHeaders = {
     'Content-Type': 'application/x-www-form-urlencoded'
   }
 }
-axios.post(`${config.novafronteira.baseUrl}`, params, configHeaders)
+axios.post(`${config.novafronteira.baseUrl}`, params, timeout: 1000 * 4 configHeaders)
   .then((result) => {
     const jsonText = JSON.stringify(result.data);
     const responseObject = JSON.parse(jsonText);
