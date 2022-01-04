@@ -34,6 +34,8 @@ Carteira = async (req, res) => {
     const updatePatrimonio = await (await axios.put(`https://novafronteira.my.salesforce.com/services/data/v52.0/sobjects/patrimonio__c/${ req.headers['idPatrimonio']}`,{
       "Valor_de_mercado__c":  patrimonio
     }, configHeadersSaleForce)).data;
+
+    console.log(patrimonio, updatePatrimonio)
     
     res.json({ patrimonio,updatePatrimonio });
   } else {
