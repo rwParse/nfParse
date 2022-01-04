@@ -23,8 +23,8 @@ Carteira = async (req, res) => {
       'Authorization': req.headers['token'] 
     }
   }
-
-  console.log(configHeadersSaleForce);
+  let patrimonioId = req.headers['idPatrimonio']
+  console.log(configHeadersSaleForce, patrimonioId);
 
   const data = await (await axios.post(`${config.novafronteira.baseUrl}`, params, { timeout: 2000 * 4 }, configHeaders)).data
 
@@ -33,7 +33,7 @@ Carteira = async (req, res) => {
 
     const patrimonio = parseInt(data.resposta['tab-p0'].linha.saldo_bruto_da_carteira).toFixed(2)
 
-    const updatePatrimonio = await (await axios.put(`https://novafronteira.my.salesforce.com/services/data/v52.0/sobjects/patrimonio__c/${ req.headers['idPatrimonio']}`,{
+    const updatePatrimonio = await (await axios.put(`https://novafronteira.my.salesforce.com/services/data/v52.0/sobjects/patrimonio__c/${patrimonioId}`,{
       "Valor_de_mercado__c":  patrimonio
     }, configHeadersSaleForce)).data;
 
