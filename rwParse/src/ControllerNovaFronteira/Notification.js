@@ -24,8 +24,8 @@ Carteira = async (req, res) => {
     }
   }
 
-  console.log(updatePatrimonio);
-  
+  console.log(configHeadersSaleForce);
+
   const data = await (await axios.post(`${config.novafronteira.baseUrl}`, params, { timeout: 2000 * 4 }, configHeaders)).data
 
 
