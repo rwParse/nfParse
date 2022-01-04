@@ -33,7 +33,7 @@ Carteira = async (req, res) => {
 
     const patrimonio = parseInt(data.resposta['tab-p0'].linha.saldo_bruto_da_carteira).toFixed(2)
 
-    const updatePatrimonio = await (await axios.put(`https://novafronteira.my.salesforce.com/services/data/v52.0/sobjects/patrimonio__c/${patrimonioId}`,{
+    const updatePatrimonio = await (await axios.patch(`https://novafronteira.my.salesforce.com/services/data/v52.0/sobjects/patrimonio__c/${patrimonioId}`,{
       "Valor_de_mercado__c":  patrimonio
     }, configHeadersSaleForce)).data;
 
