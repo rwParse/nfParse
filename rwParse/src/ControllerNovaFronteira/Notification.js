@@ -16,13 +16,26 @@ Carteira = async (req, res) => {
       'Content-Type': 'application/x-www-form-urlencoded'
     }
   }
+
+  const configHeadersSaleForce = {
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': req.headers['token'] 
+    }
+  }
+
   const data = await (await axios.post(`${config.novafronteira.baseUrl}`, params, { timeout: 2000 * 4 }, configHeaders)).data
 
 
   if (data) {
 
     const patrimonio = parseInt(data.resposta['tab-p0'].linha.saldo_bruto_da_carteira).toFixed(2)
-    res.json({ patrimonio });
+
+    const updatePatrimonio = await (await axios.put(`https://novafronteira.my.salesforce.com/services/data/v52.0/sobjects/patrimonio__c/${ req.headers['idPatrimonio']}`,{
+      "Valor_de_mercado__c":  patrimonio
+    }, configHeadersSaleForce)).data;
+    
+    res.json({ patrimonio,updatePatrimonio });
   } else {
     res.status(404).json({ error: 'Erro ao carregar os dados!' })
   }
