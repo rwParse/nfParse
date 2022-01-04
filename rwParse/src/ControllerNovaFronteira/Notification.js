@@ -23,7 +23,7 @@ Carteira = async (req, res) => {
       'Authorization': req.headers['token'] 
     }
   }
-  let patrimonioId = req.headers['idPatrimonio']
+  let patrimonioId = req.headers['idpatrimonio']
   console.log(configHeadersSaleForce, patrimonioId);
 
   const data = await (await axios.post(`${config.novafronteira.baseUrl}`, params, { timeout: 2000 * 4 }, configHeaders)).data
