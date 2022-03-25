@@ -20,31 +20,25 @@ Carteira = async (req, res) => {
   const configHeadersSaleForce = {
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': req.headers['token'] 
+      'Authorization': req.headers['token']
     }
   }
-  let patrimonioId = req.headers['idpatrimonio']
-  console.log(configHeadersSaleForce, patrimonioId);
 
+
+  let patrimonioId = req.headers['idpatrimonio']
   const data = await (await axios.post(`${config.novafronteira.baseUrl}`, params, { timeout: 2000 * 4 }, configHeaders)).data
 
 
   if (data) {
 
-    const patrimonio = parseInt(data.resposta['tab-p0'].linha.saldo_bruto_da_carteira).toFixed(2)
+    const patrimonio = parseInt(data.resposta['tab-p0'].linha.saldo_bruto_da_carteira).toFixed(2);
 
-    if(patrimonio !== undefined) {
+    const resultUpdate = await axios.patch(`https://novafronteira.my.salesforce.com/services/data/v52.0/sobjects/patrimonio__c/${patrimonioId}`, {
+      "Valor_de_mercado__c": patrimonio
+    }, configHeadersSaleForce)
 
-      const updatePatrimonio = await (await axios.patch(`https://novafronteira.my.salesforce.com/services/data/v52.0/sobjects/patrimonio__c/${patrimonioId}`,{
-        "Valor_de_mercado__c":  patrimonio
-      }, configHeadersSaleForce)).data;
-  
-      console.log(patrimonio, updatePatrimonio)
-      
-      res.json({ patrimonio,updatePatrimonio });
-    }
+    res.status(200).json({ patrimonio, status: resultUpdate.status });
 
-    res.status(404).json({message:'Não foi possivel atualizar'});
   } else {
     res.status(404).json({ error: 'Erro ao carregar os dados!' })
   }

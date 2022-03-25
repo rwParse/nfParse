@@ -5,7 +5,7 @@ const helmet = require('helmet')
 const bodyParser = require('body-parser');
 const config = require('./src/utils/index');
 
-process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = 0
+// process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = 0
 
     app.use(helmet());
     app.use(bodyParser.urlencoded({ extended: false }))
